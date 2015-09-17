@@ -70,8 +70,7 @@ var html2pdfmake = function (html) {
     }
 
     function ParseElement(cnt, e, p, styles) {
-        if (!styles)
-            styles = [];
+        styles = styles || [];
         if (e.getAttribute) {
             var nodeStyle = e.getAttribute('style');
             if (nodeStyle) {
@@ -92,19 +91,14 @@ var html2pdfmake = function (html) {
                 break;
             case 'b':
             case 'strong':
-                //styles.push('font-weight:bold');
                 ParseContainer(cnt, e, p, styles.concat(['font-weight:bold']));
                 break;
             case 'u':
-                //styles.push('text-decoration:underline');
                 ParseContainer(cnt, e, p, styles.concat(['text-decoration:underline']));
                 break;
             case 'i':
-                //styles.push('font-style:italic');
                 ParseContainer(cnt, e, p, styles.concat(['font-style:italic']));
-                //styles.pop();
                 break;
-                //cnt.push({ text: e.innerText, bold: false });
             case 'span':
                 ParseContainer(cnt, e, p, styles);
                 break;
@@ -147,7 +141,6 @@ var html2pdfmake = function (html) {
                 break;
             case 'tbody':
                 ParseContainer(cnt, e, p, styles);
-                //p = CreateParagraph();
                 break;
             case 'tr':
                 var row = [];
@@ -182,14 +175,14 @@ var html2pdfmake = function (html) {
                 cnt.push(st);
                 break;
             default:
-                console.log('Parsing for node ' + e.nodeName + ' not found');
+                console.log('#html2pdfmake', 'Parsing for node ' + e.nodeName + ' not found');
                 break;
         }
         return p;
     }
 
     function ParseHtml(cnt, htmlText) {
-        var html = $(htmlText.replace(/\t/g, '').replace(/\n/g, ''));
+        var html = $(htmlText.replace(/[\t\n]+/g, ''));
         var p = CreateParagraph();
         for (var i = 0; i < html.length; i++) {
             ParseElement(cnt, html.get(i), p);

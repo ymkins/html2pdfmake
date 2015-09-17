@@ -6,6 +6,8 @@
 var html2pdfmake = function (html) {
     var content = [];
     ParseHtml(content, html);
+
+    console.log('#html2pdfmake', content);
     return content;
 
 
@@ -81,7 +83,8 @@ var html2pdfmake = function (html) {
             }
         }
 
-        switch (e.nodeName.toLowerCase()) {
+        var nodeName = e.nodeName.toLowerCase();
+        switch (nodeName) {
             case '#text':
                 var t = {text: e.textContent.replace(/\n/g, '')};
                 if (styles) {
@@ -161,6 +164,20 @@ var html2pdfmake = function (html) {
 
                 ParseContainer(st.stack, e, p, styles);
                 cnt.push(st);
+                break;
+            case 'ol':
+            case 'ul':
+                var st = {};
+                st[nodeName] = [];
+
+                console.log('#ol,#ul,#ParseContainer', st[nodeName]);
+                ParseContainer(st[nodeName], e, p, styles);
+                
+                console.log('#ol,#ul', st);
+                cnt.push(st);
+                break;
+            case 'li':
+                ParseContainer(cnt, e, p, styles);
                 break;
             case 'div':
             case 'p':

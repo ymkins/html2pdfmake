@@ -164,6 +164,12 @@ var html2pdfmake = function (html) {
                 break;
             case 'div':
             case 'p':
+            case 'h1':
+            case 'h2':
+            case 'h3':
+            case 'h4':
+            case 'h5':
+            case 'h6':
                 p = CreateParagraph();
                 var st = {stack: []};
                 st.stack.push(p);

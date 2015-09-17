@@ -113,16 +113,14 @@ var html2pdfmake = function (html) {
                         body: []
                     }
                 };
-                var border = e.getAttribute('border');
-                var isBorder = false;
-                if (border)
-                    if (parseInt(border) === 1)
-                        isBorder = true;
-                if (!isBorder)
-                    t.layout = 'noBorders';
+                var border = e.getAttribute('pdf-border');
+                var layouts = ['noBorders', 'headerLineOnly', 'lightHorizontalLines'];
+                if (layouts.indexOf(border) > -1) {
+                    t.layout = border;
+                }
                 ParseContainer(t.table.body, e, p, styles);
 
-                var widths = e.getAttribute('widths');
+                var widths = e.getAttribute('pdf-widths');
                 if (!widths) {
                     if (t.table.body.length !== 0) {
                         if (t.table.body[0].length !== 0) {
@@ -132,7 +130,7 @@ var html2pdfmake = function (html) {
                         }
                     }
                 } else {
-                    var w = widths.split(',');
+                    var w = widths.split(/[\s,]+/);
                     for (var k = 0; k < w.length; k++) {
                         t.table.widths.push(w[k]);
                     }

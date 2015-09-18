@@ -3,9 +3,14 @@
  http://jsfiddle.net/mychn9bo/4/
  */
 
-var html2pdfmake = function (html) {
+var html2pdfmake = function (obj) {
     var content = [];
-    ParseHtml(content, html);
+    if (typeof obj === 'string' || obj instanceof String) {
+        ParseHtml(content, obj);
+    } else {
+        var p = CreateParagraph();
+        ParseElement(content, obj, p);
+    }
     return content;
 
 
@@ -162,6 +167,7 @@ var html2pdfmake = function (html) {
                 ParseContainer(st.stack, e, p, styles);
                 cnt.push(st);
                 break;
+            case 'body':
             case 'div':
             case 'p':
             case 'h1':

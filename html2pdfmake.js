@@ -97,13 +97,16 @@ var html2pdfmake = function (obj) {
                 break;
             case 'b':
             case 'strong':
-                ParseContainer(cnt, e, p, styles.concat(['font-weight:bold']));
+                p.bold = true;
+                ParseContainer(cnt, e, p, styles);
                 break;
             case 'u':
-                ParseContainer(cnt, e, p, styles.concat(['text-decoration:underline']));
+                p.decoration = 'underline';
+                ParseContainer(cnt, e, p, styles);
                 break;
             case 'i':
-                ParseContainer(cnt, e, p, styles.concat(['font-style:italic']));
+                p.italics = true;
+                ParseContainer(cnt, e, p, styles);
                 break;
             case 'span':
                 ParseContainer(cnt, e, p, styles);

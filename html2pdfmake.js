@@ -86,7 +86,8 @@ var html2pdfmake = function (obj) {
             }
         }
 
-        switch (e.nodeName.toLowerCase()) {
+        var nodeName = e.nodeName.toLowerCase();
+        switch (nodeName) {
             case '#text':
                 var t = {text: e.textContent.replace(/\n/g, '')};
                 if (styles) {
@@ -185,8 +186,13 @@ var html2pdfmake = function (obj) {
                 cnt.push(st);
                 break;
             default:
-                console.log('#html2pdfmake', 'Parsing for node ' + e.nodeName + ' not found');
+                console.log('#html2pdfmake', 'Parsing for node ' + nodeName + ' not found');
                 break;
+        }
+
+        console.log('#html2pdfmake', nodeName, e);
+        if (nodeName !== '#text' && (typeof e === 'Element' || e instanceof Element)) {
+            console.log('#html2pdfmake', window.getComputedStyle(e));
         }
         return p;
     }

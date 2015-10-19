@@ -163,6 +163,7 @@ var html2pdfmake = function (html) {
                 cnt.push(st);
                 break;
             case 'div':
+            case 'li':
             case 'p':
             case 'h1':
             case 'h2':
@@ -178,6 +179,16 @@ var html2pdfmake = function (html) {
 
                 cnt.push(st);
                 break;
+            case 'ul':
+                 var ul = {ul: []};
+                 ParseContainer(ul.ul, e, p, styles);
+                 cnt.push(ul);
+                 break;
+             case 'ol':
+                 var ul = {ol: []};
+                 ParseContainer(ul.ol, e, p, styles);
+                 cnt.push(ul);
+                 break;
             default:
                 console.log('#html2pdfmake', 'Parsing for node ' + e.nodeName + ' not found');
                 break;

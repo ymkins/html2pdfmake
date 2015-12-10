@@ -197,11 +197,13 @@ var html2pdfmake = function (html) {
     }
 
     function ParseHtml(cnt, htmlText) {
-        var html = $(htmlText.replace(/[\t\n]+/g, ''));
-        var p = CreateParagraph();
-        for (var i = 0; i < html.length; i++) {
-            ParseElement(cnt, html.get(i), p);
-        }
+      var p = CreateParagraph();
+      $('<div>').html(htmlText).contents().each(function(index, content) {
+          if(content.nodeName.toLowerCase() === '#text'){
+              content = $('<p>').append(content).get(0);
+          }
+          ParseElement(cnt, content, p);
+      });
     }
 
     function CreateParagraph() {

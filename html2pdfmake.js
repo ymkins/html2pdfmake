@@ -29,6 +29,8 @@ var html2pdfmake = function (html) {
         for (var i = 0; i < styles.length; i++) {
             var st = styles[i].trim().toLowerCase().split(':');
             if (st.length === 2) {
+                st[0] = st[0].trim();
+                st[1] = st[1].trim();
                 switch (st[0]) {
                     case 'font-size':
                         o.fontSize = parseInt(st[1]);
